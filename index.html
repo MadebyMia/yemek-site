@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Bugün Yemekte Ne Var?</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #fd5da8, #fec5e5);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+    }
+    .card {
+      background: rgba(255,255,255,0.15);
+      padding: 30px;
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      width: 90%;
+      max-width: 400px;
+    }
+    h1 {
+      margin-bottom: 10px;
+    }
+    .date {
+      font-size: 14px;
+      opacity: 0.8;
+    }
+    .meal {
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+    button {
+     margin: 8px;
+     padding: 10px 18px;
+     border: none;
+    border-radius: 10px;
+    cursor: pointer;
+     font-size: 16px;
+}
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <h1>🍽️ Bugün Yemekte</h1>
+  <div class="date" id="date"></div>
+  <div class="meal" id="meal"></div>
+  <div style="margin-top:20px;">
+  <button onclick="changeDay(0)">Bugün</button>
+  <button onclick="changeDay(1)">Yarın</button>
+</div>
+</div>
+
+<script>
+  const menu = {
+    "2026-05-03": "Ezogelin/Sebze Çorba +Tavuk kavurma/Dolma + Spagetti+ Kısır/Çiğ köfte",
+    "2026-05-04": "Tarhana/Yayla Çorba + Et Tantuni/Mevsim Türlü+Şehriyeli Pirinç Pilavı+Ayran",
+    "2026-05-05": "Mercimek/Toyga Çorba + Tavuklu Bahçevan Kebab/Ispanak+Salçalı Bulgur Pilavı+Sütlaç",
+    "2026-05-06": "Şehriye/Kremalı Mantar Çorba + Izgara Köfte/Tepsi Kumpir+Soslu makarna+Havuç Tarator",
+    "2026-05-07": "Ezogelin/Tutmaç Çorba+Fırın Tavuk/Sebzeli Mnatar Sote+Bulgur Pilavı+Cacık",
+    "2026-05-08": "Domates/Düğün Çorba(kıymalı)+Etsiz Kurufasulye/Mücver+Şehriyeli Pirinç Pilavı+Çoban Salata+Turşu",
+    "2026-05-09": "Mercimek/Mısır Çorba+Çıtır Tavuk/Dolma+Tereyağlı Erişte+Şekerpare",
+    "2026-05-10": "Tarhana/Yayla Çorba+Et Kavurma(Patates Püreli)/Karışık Kızartma+Sebzeli Pirinç Pilavı+Haydari",
+    "2026-05-11": "Ezogelin/Sebze Çorba+Patates Oturtma/Yoğurtlu Karnabahar Kızartma+Salçalı Bulgur Pilavı+Bisküvili Pasta",
+    "2026-05-12": "Şehriye/Düğün Çorba+Tavuk Tantuni/Nohut Yemeği+Pirinç Pilavı+Ayran",
+    "2026-05-13": "Mercimek/Kremalı Mnatra Çorba+Tas Kebabı/Dolma+Salçalı Makarana+Kısır/Çiğ Köfte",
+    "2026-05-14": "Domates/Yayla Çorba+Izgara Tavuk/Ratatuy+Salçalı Bulgur Pilavı+Çikolatalı Puding",
+    "2026-05-15": "Ezogelin/Toyga Çorba+Kuru Köfte(Soğan halkası ve Kroketle)/Taze Fasulye+Şehriyeli Pirinç Pilavı+Karışık Salata",
+    "2026-05-16": "Tarhana/Yayla Çorba+Tavuk Sote+Karışık Kızartma+Yoğurtlu Soslu Mantı+Meyve",
+    "2026-05-17": "Mercimek/Düğün Çorba(Kıymalı)+Etsiz Kuru Fasulye+Kabak Sandal+Bulgur Pilavı+Kemalpaşa Tatlısı",
+    "2026-05-18": "Şehriye/Köylü Çorba+Çıtır Tavuk/Kumpir+Şehriyeli Pirinç Pilavı+Acılı Ezme",
+    "2026-05-19": "Ezogelin/Kremalı Mantar Çorba+Püreli Çoban Kavurma/Dolma+Spagetti+Islak Kek",
+    "2026-05-20": "Domates/Yayla Çorba+Tavuk Fajita/Beşamel Soslu Sebze Graten+Salçalı Bulgur Pilavı+Çoban Salata",
+    "2026-05-21": "Mercimek/Sebze Çorba+Izgara Köfte(piyazla)/Sebzeli Mantar Sote+Salçalı Makarna+Haydari",
+    "2026-05-22": "Tarhana/Et Paça Çorba+Etsiz Kuru Fasulye/Mücver+Şehriyeli Pirinç Pilavı+Karışık Salata+Yoğurt",
+    "2026-05-23": "Ezogelin/Tutmaç Çorba+Tavuk Külbastı (Patates Püresiyle)/Domates soslu Karışık Kızartma+Tereyağlı Erişte+Kdayıflı Muhallebi",
+    "2026-05-24": "Şehriye/Yayla Çorba+Et Sote/Bezelye Yemeği+Salçalı Bulgur Pilavı+Cacık",
+    "2026-05-25": "Domates/Toyga Çorba+İnegöl Köfte (Elma dilim patates ile)/Yoğurtlu Karnabahar Kızartma+Şehriyeli Pirinç Pilavı+Karışık Salata",
+    "2026-05-26": "Mercimek/Kremalı Mantar Çorba+Fırın Tavuk (Kemiksiz)/Karışık Kızartma+Yoğurtlu Soslu Mantı+Patlıcan Ezme",
+    "2026-05-27": "Şehriye/Mısır Çorba+Hünkar Beğendi/Nohut Yemeği+Pirinç Pilavı+Kadayıf(cevizli)",
+    "2026-05-28": "Ezogelin/Sebze Çorba+Sebzeli Tavuk Kavurma/Kumpir+Salçalı Bulgur Pilavı+Ayran",
+    "2026-05-29": "Tarhana/Yayla Çorba+Patlıcan Musakka/Dolma+Soslu Makarna+Haşhaşlı Revani",
+    "2026-05-30": "Mercimek/Köylü Çorba+Izgara Tavuk/Bamya Yemeği+Salçalı Bulgur Pilavı+Meyve",
+    "2026-05-31": "Domates/ Et Paça Çorba+Etsiz Kuru Fasulye Yemeği/Karışık Kızartma+Şehriyeli Pirinç Pilavı+Supangle",
+
+  };
+
+    let selectedDay = 0;
+
+function changeDay(offset) {
+  selectedDay = offset;
+  showMeal();
+}
+
+function showMeal() {
+  const date = new Date();
+  date.setDate(date.getDate() + selectedDay);
+
+  const dateStr = date.toISOString().split("T")[0];
+
+  const options = { day: 'numeric', month: 'long' };
+
+  document.getElementById("date").innerText =
+    date.toLocaleDateString("tr-TR", options);
+
+  const mealText = menu[dateStr];
+
+if (!mealText) {
+  document.getElementById("meal").innerText = "Yemek bilgisi yok 😢";
+} else {
+
+  const lines = mealText.split("+");
+
+  let html = "";
+
+  lines.forEach(line => {
+    html += `<div>${line.trim()}</div>`;
+  });
+
+  document.getElementById("meal").innerHTML = html;
+}
+}
+
+showMeal();
+
+  const options = { day: 'numeric', month: 'long' };
+  document.getElementById("date").innerText =
+    today.toLocaleDateString("tr-TR", options);
+
+  document.getElementById("meal").innerText =
+    menu[todayStr] || "Bugün yemek bilgisi yok 😢";
+</script>
+
+</body>
+</html>
