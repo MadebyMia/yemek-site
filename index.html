@@ -43,6 +43,35 @@
     border-radius: 10px;
     cursor: pointer;
      font-size: 16px;
+
+    body {
+  background: linear-gradient(270deg, #ff4d6d, #ff99c8, #ffb3d9);
+  background-size: 600% 600%;
+  animation: gradientMove 10s ease infinite;
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+      .card {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+  100% { transform: translateY(0px); }
+}
+      button {
+  transition: 0.2s ease;
+}
+
+button:hover {
+  transform: scale(1.05);
+  background: #ffe6f0;
+}
 }
   </style>
 </head>
