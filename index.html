@@ -171,6 +171,29 @@ showMeal();
 
   document.getElementById("meal").innerText =
     menu[todayStr] || "Bugün yemek bilgisi yok 😢";
+
+  window.onload = function () {
+  const chick = document.getElementById("chick");
+
+  let x = 0;
+  let speed = 2;
+
+  function move() {
+    const maxX = window.innerWidth - 60;
+
+    x += speed;
+
+    if (x >= maxX || x <= 0) {
+      speed = -speed;
+    }
+
+    chick.style.left = x + "px";
+
+    requestAnimationFrame(move);
+  }
+
+  move();
+};
 </script>
 
 </body>
