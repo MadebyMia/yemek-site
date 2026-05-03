@@ -147,7 +147,7 @@ function showMeal() {
   const date = new Date();
   date.setDate(date.getDate() + selectedDay);
 
-  const dateStr = date.toISOString().split("T")[0];
+  const dateStr = date.toLocaleDateString("en-CA"); 
 
   const options = { day: 'numeric', month: 'long' };
 
