@@ -88,10 +88,63 @@ button:hover {
   width: 120px;
   z-index: 9999;
 }
+    .banner {
+  width: 100%;
+  overflow: hidden;
+  background: linear-gradient(90deg, #ffc0cb, #ffb6c1, #ffd1dc);
+  padding: 10px 40px 10px 0;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  box-shadow: 0 0 15px rgba(255, 182, 193, 0.7);
+}
+
+.banner-text {
+  display: inline-block;
+  white-space: nowrap;
+  font-weight: bold;
+  font-size: 14px;
+  color: white;
+  font-family: "Comic Sans MS", "Poppins", sans-serif;
+  animation: kaydir 12s linear infinite, glow 2s ease-in-out infinite alternate;
+}
+
+/* Yazı kayma animasyonu */
+@keyframes kaydir {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+/* Parlama efekti */
+@keyframes glow {
+  from {
+    text-shadow: 0 0 5px #fff, 0 0 10px #ff69b4;
+  }
+  to {
+    text-shadow: 0 0 10px #fff, 0 0 20px #ff1493;
+  }
+}
+
+/* Kapatma butonu */
+.close-btn {
+  position: absolute;
+  right: 10px;
+  top: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  color: white;
+  font-weight: bold;
+}
   </style>
 </head>
 <body>
 <img id="chick" src="chick.png">
+  <div class="banner" id="banner">
+  <div class="banner-text">
+    🍽️ Yakında yemek çeşitleri 3’e çıkıyor! Menü güncellenecek 💖
+  </div>
+  <span class="close-btn" onclick="closeBanner()">✖</span>
+</div>
 <div class="card">
   <h1>🍽️ Bugün Yemekte</h1>
   <div class="date" id="date"></div>
